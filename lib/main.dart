@@ -1,80 +1,74 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const ThemeApp());
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //   DeviceOrientation.portraitUp as List<DeviceOrientation>,
+  // );
+  runApp(const MyApp());
 }
 
-class ThemeApp extends StatelessWidget {
-  const ThemeApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // brightness: Brightness.dark,
-        // visualDensity: VisualDensity.adaptivePlatformDensity,
-        // visualDensity: VisualDensity(horizontal: 4, vertical: 4),
-        // primaryColor: Colors.amber,
-        colorScheme: ColorScheme.fromSeed(
-          primary: Colors.deepPurple,
-          secondary: Colors.purple,
-          seedColor: Colors.pink,
-        ),
-        textTheme: const TextTheme(
-          button: TextStyle(fontSize: 60, fontStyle: FontStyle.italic),
-          bodyText1: TextStyle(fontSize: 60, color: Colors.pink),
-          bodyText2: TextStyle(fontSize: 60, color: Colors.pink),
-          headline6: TextStyle(fontSize: 60, color: Colors.pink),
-        ),
-      ),
-      home: const ThemesItem(),
+      home: HomePage(),
     );
   }
 }
 
-class ThemesItem extends StatelessWidget {
-  const ThemesItem({
-    Key? key,
-  }) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
+    final myAppBar = AppBar(
+      title: const Text("Media Query"),
+    );
+
+    final bodyHeight = mediaQueryHeight -
+        myAppBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    final isLanscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final body1Height = isLanscape ? bodyHeight * 0.5 : bodyHeight * 0.3;
+    final body2Height = isLanscape ? bodyHeight * 0.5 : bodyHeight * 0.7;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Theme App",
-          style: Theme.of(context).textTheme.headline6,
-        ),
-      ),
+      appBar: myAppBar,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Text",
-              style: TextStyle(color: Theme.of(context).primaryColor),
+          child: Column(
+        children: [
+          Container(
+            height: body1Height,
+            width: mediaQueryWidth,
+            color: Colors.amber,
+          ),
+          Container(
+            height: body2Height,
+            color: Colors.grey[300],
+            child: ListView.builder(
+              itemCount: 20,
+              itemBuilder: (context, index) {
+                return const ListTile(
+                  leading: CircleAvatar(),
+                  trailing: Icon(Icons.settings),
+                  title: Text("Text"),
+                );
+              },
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                "Button",
-              ),
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
-          Icons.arrow_left,
-          size: 35.0,
-        ),
-      ),
+          )
+        ],
+      )),
     );
   }
 }
