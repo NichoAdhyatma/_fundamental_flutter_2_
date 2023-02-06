@@ -1,14 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class Product {
-  @required
-  String title;
-  @required
-  String description;
-  @required
-  String imageUrl;
-  @required
-  int price;
+  final String? id;
+  final String? title;
+  final String? description;
+  final double? price;
+  final String? imageUrl;
+  bool isFavorite;
 
-  Product(this.title, this.description, this.imageUrl, this.price);
+  Product({
+    @required this.id,
+    @required this.title,
+    @required this.description,
+    @required this.price,
+    @required this.imageUrl,
+    this.isFavorite = false,
+  });
 }
+

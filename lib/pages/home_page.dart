@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_2/models/product_model.dart';
+import 'package:flutter_2/models/product.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
