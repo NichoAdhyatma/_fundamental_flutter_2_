@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_2/providers/cart.dart';
 import 'package:provider/provider.dart';
 import '../screens/product_detail_screen.dart';
-import '../models/product_model.dart';
+import '../providers/product_provider.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({super.key});
@@ -9,6 +10,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<Product>(context, listen: false);
+    final cartItem = Provider.of<Cart>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -36,7 +38,23 @@ class ProductItem extends StatelessWidget {
             icon: const Icon(
               Icons.shopping_cart,
             ),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    "Berhasil ditambahkan",
+                  ),
+                  duration: Duration(
+                    milliseconds: 500,
+                  ),
+                ),
+              );
+              cartItem.addItem(
+                productData.id!,
+                productData.title!,
+                productData.price!,
+              );
+            },
             color: Theme.of(context).colorScheme.secondary,
           ),
         ),

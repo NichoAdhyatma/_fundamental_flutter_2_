@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_2/providers/all_products.dart';
+import 'package:flutter_2/providers/cart.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -13,6 +14,7 @@ class ProductDetailScreen extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as String; // is the id!
     // ...
     final product = Provider.of<Products>(context).getProductById(productId);
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Details'),
@@ -52,6 +54,42 @@ class ProductDetailScreen extends StatelessWidget {
             "${product.description}",
             style: const TextStyle(
               fontSize: 18,
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    "Berhasil ditambahkan",
+                  ),
+                  duration: Duration(
+                    milliseconds: 500,
+                  ),
+                ),
+              );
+              cart.addItem(
+                productId,
+                product.id!,
+                product.price!,
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: MediaQuery.of(context).size.width * 0.35,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.add_shopping_cart),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Add to cart"),
+                ],
+              ),
             ),
           ),
         ],
