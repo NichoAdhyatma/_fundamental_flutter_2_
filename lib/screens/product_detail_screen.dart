@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_2/providers/all_products.dart';
 import 'package:flutter_2/providers/cart.dart';
+import 'package:flutter_2/screens/cart_screen.dart';
+import 'package:flutter_2/widgets/badge.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -18,6 +20,22 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Details'),
+        actions: [
+          Consumer<Cart>(
+            builder: (context, value, child) {
+              return BadgeIcon(
+                value: value.lengthCart.toString(),
+                child: child!,
+              );
+            },
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+              icon: const Icon(Icons.shopping_cart),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
