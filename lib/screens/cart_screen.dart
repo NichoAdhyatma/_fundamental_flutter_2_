@@ -32,27 +32,30 @@ class CartScreen extends StatelessWidget {
             child: ListView.builder(
               itemCount: cartData.length,
               itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    ListTile(
-                      title: Text(cartData[index].title),
-                      subtitle: Text(
-                        "\$ ${cartData[index].price * cartData[index].qty}",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      trailing: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 4.0),
-                        child: Text(
-                          "x ${cartData[index].qty}",
-                          textAlign: TextAlign.center,
-                        ),
+                return Dismissible(
+                  onDismissed: (direction) {
+                    
+                  },
+                  direction: DismissDirection.endToStart,
+                  key: Key(index.toString()),
+                  child: ListTile(
+                    title: Text(cartData[index].title),
+                    subtitle: Text(
+                      "\$ ${cartData[index].price * cartData[index].qty}",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 4.0),
+                      child: Text(
+                        "x ${cartData[index].qty}",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
                 );
               },
             ),
